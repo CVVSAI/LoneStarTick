@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/leaflet-search.css">
         <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
-        <link rel="stylesheet" href="https://tile.maptiler.com/libs/zoomify/latest/openseadragon.min.css" />
         <style>
         html, body, #map {
             width: 100%;
@@ -25,12 +24,12 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            background-color: rgba(255, 255, 255, 0.7); /* Transparency added here */
+            background-color: rgba(255, 255, 255, 0.7); 
             padding: 5px;
             font-size: 12px;
             border: 2px solid #777;
             border-radius: 5px;
-            z-index: 1000; /* Ensure legend is above all map layers */
+            z-index: 1000; 
         }
 
         .legend-inner {
@@ -44,21 +43,21 @@
 
         .legend-gradient {
             margin-right: 5px;
-            height: 100px; /* Adjust if needed */
+            height: 100px; 
         }
 
         .legend-values {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 100px; /* This should match the height of the gradient image */
+            height: 100px;
         }
 
         .legend-description {
             font-size: 20px;
-            padding-left: 5px; /* Add some space between the gradient and the text */
-            max-width: 250px; /* Set a max-width to force text to wrap */
-            white-space: normal; /* Ensure that the text wraps */
+            padding-left: 5px; 
+            max-width: 250px; 
+            white-space: normal; 
         }
 
 
@@ -95,6 +94,7 @@
         
         <script src="js/qgis2web_expressions.js"></script>
         <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+        <script src="https://unpkg.com/@maptiler/leaflet-maptilersdk/dist/leaflet-maptilersdk.umd.js"></script>
         <script src="js/L.Control.Locate.min.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
         <script src="js/leaflet.pattern.js"></script>
@@ -105,7 +105,6 @@
         <script src="js/labels.js"></script>
         <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
         <script src="js/leaflet-search.js"></script>
-        <script src="https://tile.maptiler.com/libs/zoomify/latest/openseadragon.min.js"></script>
         <script src="data/cb_2020_13_cousub_500k_2.js"></script>
         <script>
         var highlightLayer;
@@ -158,14 +157,16 @@
         }
         
         // Add Maptiler Data Viz layer
-        var maptilerDataViz = L.tileLayer('https://tile.maptiler.com/tiles.vector.pbf?key=EOXzDjretWNv8vYZTbgDC/{z}/{x}/{y}.pbf', {
-            attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-            maxZoom: 20,
+        const key = 'EOxZDrJetWN8vYZTDgDC';
+        var maptilerDataViz = L.tileLayer(`https://api.maptiler.com/maps/dataviz/{z}/{x}/{y}.png?key=${key}`,{
             tileSize: 512,
             zoomOffset: -1,
-            vectorTileLayerStyles: 'https://tile.maptiler.com/dataviz/style.json',
-            opaque: true
-        }).addTo(map);
+            minZoom: 1,
+            attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
+            crossOrigin: true
+            }).addTo(map);
+
+
 
         // Add Google Maps layer
         var googleMaps = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
